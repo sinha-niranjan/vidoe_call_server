@@ -1,6 +1,26 @@
 const { Server } = require("socket.io");
 
-const io = new Server(8000, { cors: true });
+const cors = require("cors");
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+
+app.use(cors())
+
+app.get('/', (req, res) => {
+  res.send('<h1>Hello world</h1>');
+});
+
+server.listen(8000, () => {
+  console.log('listening on *:8000');
+});
+
+
+
+
+const io = new Server(server, { cors: true });
 
 const emailToSocketIdMap = new Map();
 const socketIdToEmailMap = new Map();
